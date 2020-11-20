@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="lexer.cpp" />
+    <ClCompile Include="numberexpr.cpp" />
+    <ClCompile Include="variableexpr.cpp" />
+    <ClCompile Include="binaryexpr.cpp" />
+    <ClCompile Include="callexpr.cpp" />
+    <ClCompile Include="fnast.cpp" />
+    <ClCompile Include="ifexpr.cpp" />
+    <ClCompile Include="forexpr.cpp" />
+    <ClCompile Include="unaryexpr.cpp" />
+    <ClCompile Include="varexpr.cpp" />
+    <ClCompile Include="globalexpr.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lexer.h" />
+    <ClInclude Include="expr.h" />
+    <ClInclude Include="numberexpr.h" />
+    <ClInclude Include="variableexpr.h" />
+    <ClInclude Include="binaryexpr.h" />
+    <ClInclude Include="callexpr.h" />
+    <ClInclude Include="fnast.h" />
+    <ClInclude Include="ifexpr.h" />
+    <ClInclude Include="forexpr.h" />
+    <ClInclude Include="unaryexpr.h" />
+    <ClInclude Include="varexpr.h" />
+    <ClInclude Include="globalexpr.h" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,72 @@
+extern ClearBackgroundD(r, g, b, a);
+extern DrawPixelD(x, y, r, g, b, a);
+extern DrawRectangleD(x, y, w, h, r, g, b, a);
+
+def unary!(v)
+	if v then
+		0;
+	else
+		1;
+	end
+end
+
+def unary-(v)
+	0 - v;
+end
+
+def binary| 5 (lhs, rhs)
+	if lhs then
+		1;
+	elseif rhs then
+		1;
+	else
+		0;
+	end
+end
+
+def binary& 6 (lhs, rhs)
+	if !lhs then
+		0;
+	else
+		!!rhs;
+	end
+end
+
+def CheckCollision(xa, ya, wa, ha, xb, yb, wb, hb)
+	!!(xa + wa / 2 > xb - wb / 2 & xa - wa / 2 < xb + wb / 2 & ya + ha / 2 > yb - hb / 2 & ya - ha / 2 < yb + hb / 2);
+end
+
+var bx, by, dbx, dby, px, py, ax, ay;
+
+def Init(w, h)
+	bx = w / 2;
+	by = h / 2;
+	dbx = 1;
+	dby = 1;
+end
+
+def MainLoop(w, h, tick, dmx, dmy, dw, lmb)
+	ClearBackgroundD(1, 1, 1, 1);
+	DrawRectangleD(bx - 5, by - 5, 10, 10, 0, 0, 0, 1);
+	DrawRectangleD(px - 4, py - 16, 8, 32, 0, 0, 0, 1);
+	DrawRectangleD(ax - 4, ay - 16, 8, 32, 0, 0, 0, 1);
+
+	bx = bx + dbx;
+	by = by + dby;
+
+	if bx < 0 | bx > w - 1 then
+		bx = bx - dbx;
+		dbx = -dbx;
+	else
+		0;
+	end
+
+	if by < 0 | by > h - 1 then
+		by = by - dby;
+		dby = -dby;
+	else
+		0;
+	end
+
+	py = py + dmy;
+end

@@ -1,0 +1,103 @@
+extern ClearBackgroundD(r, g, b, a);
+extern DrawPixelD(x, y, r, g, b, a);
+extern DrawRectangleD(x, y, w, h, r, g, b, a);
+
+def unary!(v)
+	if v then
+		0;
+	else
+		1;
+	end
+end
+
+def unary-(v)
+	0 - v;
+end
+
+def binary| 5 (lhs, rhs)
+	if lhs then
+		1;
+	elseif rhs then
+		1;
+	else
+		0;
+	end
+end
+
+def binary& 6 (lhs, rhs)
+	if !lhs then
+		0;
+	else
+		!!rhs;
+	end
+end
+
+def paintdensity(x, y, d)
+	DrawPixelD(x, y, 1.2 - d * d * d * d, 1.1 - d * d, 1 - d, 1);
+end
+
+def mandelconverger(iter, r, i, cr, ci)
+	if iter > 31 | (r * r + i * i > 4) then
+		iter;
+	else
+		mandelconverger(iter + 1, r * r - i * i + cr, 2 * r * i + ci, cr, ci);
+	end
+end
+
+def mandelconverge(r, i)
+	mandelconverger(0, r, i, r, i);
+end
+
+def mandel(ox, oy, w, h, rs, is, rm, im)
+	for y = 0, y < h, 1 do
+		for x = 0, x < w, 1 do
+			paintdensity(ox + x, oy + y, mandelconverge(rs + rm * x - rm * w / 2, is + im * y - im * h / 2) / 32);
+		end
+	end
+	0;
+end
+
+var cx = -0.8, cy = -0.4, zoom = 0.01, zd = 0.0005;
+
+def Draw(w, h)
+	ClearBackgroundD(0, 0, 0, 1);
+	mandel(0, 0, w, h, cx, cy, zoom, zoom);
+end
+
+def Init(w, h)
+	Draw(w, h);
+end
+
+def MainLoop(w, h, tick, dmx, dmy, dw, lmb)
+	var changed = 0;
+
+	if dw > 0 then
+		for d = 0, d < dw * 2, 1 do
+			zoom = zoom - zd;
+			zd = zd * 0.95;
+			changed = 1;
+		end
+	elseif dw < 0 then
+		for d = 0, d < -dw * 2, 1 do
+			zd = zd / 0.95;
+			zoom = zoom + zd;
+			changed = 1;
+		end
+	else
+		0;
+	end
+	if lmb then
+		cx = cx - dmx * zd * 20;
+		cy = cy - dmy * zd * 20;
+		changed = 1;
+	else
+		0;
+	end
+
+	if changed then
+		Draw(w, h);
+		0;
+	else
+		0;
+	end
+end
